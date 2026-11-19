@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="ReFocus: progress-guided adaptive practice for long-horizon robotic manipulation reinforcement learning.">
+<meta name="theme-color" content="#0c0f0f">
+<title>ReFocus: Progress-Guided Adaptive Practice for Long-Horizon Robotic Manipulation Reinforcement Learning</title>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="style.css?v=2">
+<link rel="stylesheet" href="hero-preview.css?v=4">
+<link rel="stylesheet" href="interactive-sections.css?v=4">
+<link rel="stylesheet" href="research-stories.css?v=4">
+<link rel="stylesheet" href="demo-gallery.css">
+<script defer src="script.js?v=4"></script>
+<script defer src="interactive-sections.js?v=3"></script>
+<script defer src="assets/stories/trajectory-data.js?v=2"></script>
+<script defer src="research-stories.js?v=4"></script>
+<script defer src="demo-gallery.js?v=2"></script>
+<script defer src="video-playback.js?v=4"></script>
+</head>
+<body id="top">
+<div id="progress" aria-hidden="true"></div>
+<nav class="floating-nav" aria-label="Main navigation"><div class="nav-inner"><a class="brand" href="#top"><span class="brand-mark">✳</span> Re<span>Focus</span></a><div class="nav-links"><a href="#method">Method</a><a href="#practice">Practice</a><a href="#results">Results</a><a href="#demos">Demos</a><a href="#real-demos">Real world</a><a href="#ablations">Ablation</a></div><button class="theme-toggle" type="button" aria-label="Switch to light theme" title="Switch color theme">☼</button></div></nav>
+<header class="hero">
+  <div class="hero-intro">
+    <div class="rollout-wall" aria-hidden="true">
+      <picture><source media="(prefers-reduced-motion: no-preference)" srcset="assets/rollouts/dishwasher-a.gif"><img src="assets/rollouts/dishwasher-a.jpg" width="224" height="126" decoding="async" alt=""></picture>
+      <picture><source media="(prefers-reduced-motion: no-preference)" srcset="assets/rollouts/stir-a.gif"><img src="assets/rollouts/stir-a.jpg" width="224" height="126" decoding="async" alt=""></picture>
+      <picture><source media="(prefers-reduced-motion: no-preference)" srcset="assets/rollouts/soak-3.gif"><img src="assets/rollouts/soak-3.jpg" width="224" height="126" decoding="async" alt=""></picture>
+      <picture><source media="(prefers-reduced-motion: no-preference)" srcset="assets/rollouts/kettle-2.gif"><img src="assets/rollouts/kettle-2.jpg" width="224" height="126" decoding="async" alt=""></picture>
+      <picture><source media="(prefers-reduced-motion: no-preference)" srcset="assets/rollouts/scrub-a.gif"><img src="assets/rollouts/scrub-a.jpg" width="224" height="126" decoding="async" alt=""></picture>
+      <picture><source media="(prefers-reduced-motion: no-preference)" srcset="assets/rollouts/dishwasher-6.gif"><img src="assets/rollouts/dishwasher-6.jpg" width="224" height="126" decoding="async" alt=""></picture>
+      <picture><source media="(prefers-reduced-motion: no-preference)" srcset="assets/rollouts/soak-a.gif"><img src="assets/rollouts/soak-a.jpg" width="224" height="126" decoding="async" alt=""></picture>
+      <picture><source media="(prefers-reduced-motion: no-preference)" srcset="assets/rollouts/straw.gif"><img src="assets/rollouts/straw.jpg" width="224" height="126" decoding="async" alt=""></picture>
+      <picture><source media="(prefers-reduced-motion: no-preference)" srcset="assets/rollouts/coffee.gif"><img src="assets/rollouts/coffee.jpg" width="224" height="126" decoding="async" alt=""></picture>
+      <picture><source media="(prefers-reduced-motion: no-preference)" srcset="assets/rollouts/soak-7.gif"><img src="assets/rollouts/soak-7.jpg" width="224" height="126" decoding="async" alt=""></picture>
+      <picture><source media="(prefers-reduced-motion: no-preference)" srcset="assets/rollouts/stir-b.gif"><img src="assets/rollouts/stir-b.jpg" width="224" height="126" decoding="async" alt=""></picture>
+      <picture><source media="(prefers-reduced-motion: no-preference)" srcset="assets/rollouts/dishwasher-3.gif"><img src="assets/rollouts/dishwasher-3.jpg" width="224" height="126" decoding="async" alt=""></picture>
+      <picture><source media="(prefers-reduced-motion: no-preference)" srcset="assets/rollouts/scrub-b.gif"><img src="assets/rollouts/scrub-b.jpg" width="224" height="126" decoding="async" alt=""></picture>
+      <picture><source media="(prefers-reduced-motion: no-preference)" srcset="assets/rollouts/dishwasher-4.gif"><img src="assets/rollouts/dishwasher-4.jpg" width="224" height="126" decoding="async" alt=""></picture>
+      <picture><source media="(prefers-reduced-motion: no-preference)" srcset="assets/rollouts/soak-4.gif"><img src="assets/rollouts/soak-4.jpg" width="224" height="126" decoding="async" alt=""></picture>
+      <picture><source media="(prefers-reduced-motion: no-preference)" srcset="assets/rollouts/toast.gif"><img src="assets/rollouts/toast.jpg" width="224" height="126" decoding="async" alt=""></picture>
+      <picture><source media="(prefers-reduced-motion: no-preference)" srcset="assets/rollouts/kettle-3.gif"><img src="assets/rollouts/kettle-3.jpg" width="224" height="126" decoding="async" alt=""></picture>
+      <picture><source media="(prefers-reduced-motion: no-preference)" srcset="assets/rollouts/coffee-b.gif"><img src="assets/rollouts/coffee-b.jpg" width="224" height="126" decoding="async" alt=""></picture>
+      <picture><source media="(prefers-reduced-motion: no-preference) and (min-width: 761px)" srcset="assets/rollouts/soak-5.gif"><img src="assets/rollouts/soak-5.jpg" width="224" height="126" decoding="async" alt=""></picture>
+      <picture><source media="(prefers-reduced-motion: no-preference) and (min-width: 761px)" srcset="assets/rollouts/kettle.gif"><img src="assets/rollouts/kettle.jpg" width="224" height="126" decoding="async" alt=""></picture>
+      <picture><source media="(prefers-reduced-motion: no-preference) and (min-width: 761px)" srcset="assets/rollouts/dishwasher-b.gif"><img src="assets/rollouts/dishwasher-b.jpg" width="224" height="126" decoding="async" alt=""></picture>
+      <picture><source media="(prefers-reduced-motion: no-preference) and (min-width: 761px)" srcset="assets/rollouts/leftovers.gif"><img src="assets/rollouts/leftovers.jpg" width="224" height="126" decoding="async" alt=""></picture>
+      <picture><source media="(prefers-reduced-motion: no-preference) and (min-width: 761px)" srcset="assets/rollouts/soak-8.gif"><img src="assets/rollouts/soak-8.jpg" width="224" height="126" decoding="async" alt=""></picture>
+      <picture><source media="(prefers-reduced-motion: no-preference) and (min-width: 761px)" srcset="assets/rollouts/dishwasher-5.gif"><img src="assets/rollouts/dishwasher-5.jpg" width="224" height="126" decoding="async" alt=""></picture>
+      <picture><source media="(prefers-reduced-motion: no-preference) and (min-width: 761px)" srcset="assets/rollouts/kettle-4.gif"><img src="assets/rollouts/kettle-4.jpg" width="224" height="126" decoding="async" alt=""></picture>
+      <picture><source media="(prefers-reduced-motion: no-preference) and (min-width: 761px)" srcset="assets/rollouts/soak-b.gif"><img src="assets/rollouts/soak-b.jpg" width="224" height="126" decoding="async" alt=""></picture>
+      <picture><source media="(prefers-reduced-motion: no-preference) and (min-width: 761px)" srcset="assets/rollouts/dishwasher-7.gif"><img src="assets/rollouts/dishwasher-7.jpg" width="224" height="126" decoding="async" alt=""></picture>
+      <picture><source media="(prefers-reduced-motion: no-preference) and (min-width: 761px)" srcset="assets/rollouts/soak-6.gif"><img src="assets/rollouts/soak-6.jpg" width="224" height="126" decoding="async" alt=""></picture>
+      <picture><source media="(prefers-reduced-motion: no-preference) and (min-width: 761px)" srcset="assets/rollouts/soak-9.gif"><img src="assets/rollouts/soak-9.jpg" width="224" height="126" decoding="async" alt=""></picture>
+      <picture><source media="(prefers-reduced-motion: no-preference) and (min-width: 761px)" srcset="assets/rollouts/dishwasher-8.gif"><img src="assets/rollouts/dishwasher-8.jpg" width="224" height="126" decoding="async" alt=""></picture>
+    </div>
+    <div class="wrap">
+  <div class="hero-eyebrow"><span class="pulse-dot" aria-hidden="true"></span> Long-Horizon Manipulation · Reinforcement Learning</div>
+  <h1>Re<span class="hero-title-accent">Focus</span><span class="hero-title-colon">:</span> <span class="hero-title-detail">Progress-Guided Adaptive Practice for Long-Horizon Robotic Manipulation Reinforcement Learning</span></h1>
+  <p class="hero-description">A robot can make progress and still fail the task. ReFocus turns that progress into feedback, finds where the policy gets stuck, and gives those bottlenecks the practice they need.</p>
+  <div class="hero-actions"><a class="btn primary" href="#method"><span>↓</span> Explore the method</a><a class="btn" href="https://github.com/ReFocus-Robotics/ReFocus">Training code</a></div>
+    </div>
+    <button type="button" class="motion-toggle" data-motion-toggle hidden>Pause background</button>
+  </div>
+  <dl class="hero-highlights wrap" aria-label="Key results">
+    <div><dt>LIBERO-Long</dt><dd><strong data-hero-count>97.8<span>%</span></strong><small>Full-task success · +7.2 pp vs. SFT</small></dd></div>
+    <div><dt>RoboCasa365 Composite-Seen</dt><dd><strong data-hero-count>51.3<span>%</span></strong><small>Full-task success · +12.0 pp vs. SFT</small></dd></div>
+    <div><dt>Unitree G1-D</dt><dd><strong data-hero-count>95–100<span>%</span></strong><small>Success across 3 real-robot tasks</small></dd></div>
+  </dl>
+  <div class="wrap">
+
+  <section class="motivation story-panel" id="motivation">
+    <div class="story-heading">
+      <span class="micro-label">MOTIVATION · ROBOCASA365</span>
+      <h2>What did the robot learn <em>from a failed task?</em></h2>
+      <p>The robot puts both foods in the bowl, then stalls before storing it. A terminal reward of zero misses those two completions and gives no indication of which part to practice.</p>
+    </div>
+    <div class="motivation-grid">
+      <article class="motivation-case">
+        <video src="assets/stories/leftovers-failed.mp4" poster="assets/stories/failed.jpg" controls playsinline preload="none" data-playback-rate="9" data-motivation-intro data-rollout-outcome="Failure" aria-label="Failed StoreLeftoversInBowl rollout"></video>
+        <div class="motivation-caption"><h3>See the progress that terminal reward misses</h3>
+          <div class="motivation-score"><span>Terminal reward <b>0</b></span><span>Subtasks verified <b>2</b></span></div>
+          <p>Both food-placement events are recorded before the bowl-to-fridge bottleneck.</p>
+          <a class="text-link" href="#progress-reward">Replay with the task DAG <span>↓</span></a>
+        </div>
+      </article>
+      <article class="motivation-case">
+        <div class="motivation-window-grid" data-motivation-practice role="group" aria-label="Bowl-to-fridge practice window across four successful rollouts">
+          <video src="assets/stories/fridge-detail.mp4" poster="assets/stories/fridge.jpg" controls playsinline preload="none" data-rollout-outcome="Success" aria-label="Bowl-to-fridge practice window, rollout 1"></video>
+          <video src="assets/stories/fridge-window-2.mp4" poster="assets/stories/fridge-window-2.jpg" controls playsinline preload="none" data-rollout-outcome="Success" aria-label="Bowl-to-fridge practice window, rollout 2"></video>
+          <video src="assets/stories/fridge-window-3.mp4?v=2" poster="assets/stories/fridge-window-3.jpg?v=2" controls playsinline preload="none" data-rollout-outcome="Success" aria-label="Bowl-to-fridge practice window, rollout 3"></video>
+          <video src="assets/stories/fridge-window-4.mp4" poster="assets/stories/fridge-window-4.jpg" controls playsinline preload="none" data-rollout-outcome="Success" aria-label="Bowl-to-fridge practice window, rollout 4"></video>
+        </div>
+        <div class="motivation-caption"><h3>Give the bottleneck more practice</h3>
+          <div class="bottleneck-actions"><span>Lift the bowl</span><span>Move to the fridge</span><span>Place on the shelf</span></div>
+          <p>Four successful evaluation rollouts show the bowl-to-fridge practice window.</p>
+          <a class="text-link" href="#practice">Explore the practice window <span>↓</span></a>
+        </div>
+      </article>
+    </div>
+  </section>
+  <div class="scroll-note"><span class="scroll-line"></span> SCROLL TO EXPLORE</div>
+  </div>
+</header>
+<main>
+<section class="intro-section wrap" id="method">
+  <div class="section-intro">
+    <div class="section-kicker"><span>PART I</span> THE METHOD</div>
+    <h2>When a long task fails,<br><em>where should we practice?</em></h2>
+    <p>ReFocus couples global learning with local practice. A shared policy learns from task progress, then revisits the stages that most need attention.</p>
+  </div>
+  <div class="method-overview">
+    <button class="method-motion" type="button" data-method-motion hidden>Pause illustrations</button>
+    <div class="method-illustrations">
+      <article class="method-clip" data-method-clip>
+        <h3><a href="#progress-reward">Progress Reward <span aria-hidden="true">↗</span></a></h3>
+        <div class="method-animation method-credit" aria-hidden="true">
+          <div class="method-rollout">
+            <img src="assets/stories/gae-0.jpg" alt="" loading="lazy" data-method-frame="0">
+            <img src="assets/stories/gae-124.jpg" alt="" loading="lazy" data-method-frame="1">
+            <img src="assets/stories/gae-360.jpg" alt="" loading="lazy" data-method-frame="2">
+            <img src="assets/stories/gae-1700.jpg" alt="" loading="lazy" data-method-frame="3" class="is-current">
+            <span data-method-frame="0">Step 0</span>
+            <span data-method-frame="1">Step 124</span>
+            <span data-method-frame="2">Step 360</span>
+            <span data-method-frame="3" class="is-current">Task failed</span>
+          </div>
+          <div class="method-subtasks">
+            <span data-method-at="1" class="is-reached">Vegetable</span>
+            <span data-method-at="2" class="is-reached">Chicken</span>
+            <span data-method-at="3" class="method-subtask-failed is-reached">Bowl in Fridge</span>
+          </div>
+        </div>
+        <p>Both food placements earn credit even when the rollout fails to store the bowl.</p>
+      </article>
+      <article class="method-clip" data-method-clip>
+        <h3><a href="#practice">Adaptive Practice Window <span aria-hidden="true">↗</span></a></h3>
+        <div class="method-animation method-windows" aria-hidden="true">
+          <div class="method-window-axis"><span>Start</span><span>Entry</span><span>Target</span><span>End</span></div>
+          <div class="method-window-row">
+            <b>Normal</b><i class="method-window-track method-window-normal is-reached" data-method-at="0"></i>
+          </div>
+          <div class="method-window-row">
+            <b>Prefix</b><i class="method-window-track method-window-prefix is-reached" data-method-at="1"></i>
+          </div>
+          <div class="method-window-row">
+            <b>Suffix</b><i class="method-window-track method-window-suffix is-reached" data-method-at="2"></i>
+          </div>
+          <div class="method-window-key"><i></i> Selected bottleneck</div>
+        </div>
+        <p>Normal covers entry to target. Prefix adds earlier steps and Suffix continues to task completion.</p>
+      </article>
+      <article class="method-clip" data-method-clip>
+        <h3><a href="#rounds">History Buffer <span aria-hidden="true">↗</span></a></h3>
+        <div class="method-animation method-record" aria-hidden="true">
+          <div data-method-at="0" class="is-reached"><small>Diagnose</small><strong>Bowl in Fridge stalls</strong></div>
+          <div data-method-at="1" class="is-reached"><small>Store</small><strong>600-step window · 3/5 → 1/5</strong></div>
+          <div data-method-at="2" class="is-reached"><small>Read next round</small><strong>Retain, revise, or skip</strong></div>
+        </div>
+        <p>The Scheduler reads prior bottlenecks, practice costs, and evaluation results to plan the next round.</p>
+      </article>
+    </div>
+  </div>
+  <div class="method-lab" id="method-lab">
+  <div class="method-flow" role="group" aria-label="Explore the three parts of ReFocus">
+    <button type="button" data-stage="reward" aria-pressed="true"><small>Global RL</small><strong>Measure progress</strong></button>
+    <span class="flow-arrow" aria-hidden="true"></span>
+    <button type="button" data-stage="window" aria-pressed="false"><small>Scheduler &amp; Local RL</small><strong>Practice a bottleneck</strong></button>
+    <span class="flow-arrow" aria-hidden="true"></span>
+    <button type="button" data-stage="history" aria-pressed="false"><small>Guide the next round</small><strong>Evaluation &amp; History Buffer</strong></button>
+  </div>
+  <div class="flow-return"><span class="flow-arrow backward" aria-hidden="true"></span><span>Evaluation and practice history inform the next round</span></div>
+  <div class="method-lab-body">
+    <div class="lab-visual">
+      <span class="micro-label">Illustrative task · Store leftovers in a bowl</span>
+      <div class="lab-track" data-lab-track></div>
+      <p class="lab-observation" data-lab-observation aria-live="polite"></p>
+    </div>
+    <div class="lab-controls">
+      <h3 data-lab-title></h3><p data-lab-description></p>
+      <div class="chip-group" data-lab-options role="group" aria-label="Illustration controls"></div>
+      <a class="text-link lab-history-link" data-lab-history-link href="#rounds" hidden>Explore Evaluation &amp; History Buffer <span>↓</span></a>
+    </div>
+  </div>
+</div></section>
+
+<section class="section alt-section" id="progress-reward">
+  <div class="wrap">
+    <div class="section-heading">
+      <div class="section-kicker"><span>01</span> PROGRESS REWARD</div>
+      <h2>Partial progress should <em>count.</em></h2>
+      <p>Play or scrub a failed RoboCasa365 rollout to see which subtask completions the environment verifies. Each stage gets a share of the task-level reward budget, divided among its subtasks.</p>
+    </div>
+    <div class="story-panel dag-replay">
+      <div class="dag-player">
+        <video data-dag-video src="assets/stories/leftovers-failed.mp4" poster="assets/stories/failed.jpg" controls playsinline preload="metadata" data-playback-rate="6" data-rollout-outcome="Failure" aria-label="StoreLeftoversInBowl rollout with subtask verification"></video>
+        <p>StoreLeftoversInBowl · Failed rollout · 6× playback</p>
+      </div>
+      <div class="dag-side">
+        <div class="story-subhead"><h3>Task DAG</h3><span data-dag-count>0 / 3 verified</span></div>
+        <div class="live-dag" aria-label="Both food placements precede placing the bowl in the fridge">
+          <div class="dag-pair">
+            <button type="button" class="dag-node" data-dag-key="vegetable"><b>Vegetable in bowl</b><small>Not reached</small></button>
+            <button type="button" class="dag-node" data-dag-key="chicken"><b>Chicken in bowl</b><small>Not reached</small></button>
+          </div>
+          <span class="dag-join" aria-hidden="true"></span>
+          <div class="dag-node" data-dag-key="bowl"><b>Bowl in Fridge</b><small>Not reached</small></div>
+        </div>
+        <div class="dag-key"><span><i></i>Verified</span><span><i></i>Not reached</span><span class="dag-key-failed"><i></i>Failed</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section wrap" id="practice">
+  <div class="section-heading">
+    <div class="section-kicker"><span>02</span> ADAPTIVE PRACTICE WINDOWS</div>
+    <h2>Find the bottleneck.<br><em>Make room to practice.</em></h2>
+    <p>The Scheduler selects a task segment using evaluation rollouts and prior practice. Switch between the full rollout, Prefix, and Suffix, then drag through the selected clip.</p>
+  </div>
+  <div class="story-panel practice-story">
+    <div class="practice-view">
+      <video data-practice-video src="assets/stories/leftovers-full.mp4" poster="assets/stories/practice-0.jpg" controls playsinline preload="metadata" aria-label="Successful StoreLeftoversInBowl rollout"></video>
+      <div class="practice-controls">
+        <span class="micro-label">ROLLOUT COVERAGE</span><h3 data-practice-title>Normal window</h3>
+        <div class="chip-group" data-practice-modes role="group" aria-label="Choose a practice window mode"></div>
+        <p data-practice-description></p>
+      </div>
+    </div>
+    <div class="practice-timeline">
+      <div class="practice-frames" data-practice-frames aria-label="Jump to a keyframe"></div>
+      <div class="slider-row"><label for="practice-seek">Rollout time</label><output for="practice-seek" data-practice-time>0:00</output></div>
+      <input id="practice-seek" type="range" min="0" max="96.7" step="0.01" value="0">
+      <div class="dag-key practice-key"><span><i></i>Mode coverage</span><span><i></i>Practice window</span><span>Illustrative window boundaries · 3× playback</span></div>
+    </div>
+  </div>
+</section>
+<section class="section section-border" id="rounds">
+  <div class="wrap">
+    <div class="section-heading">
+      <div class="section-kicker"><span>03</span> MULTI-ROUND OPTIMIZATION</div>
+      <h2>Evaluation &amp; <em>History Buffer</em></h2>
+      <p>Full-task evaluation and practice history guide which windows the Scheduler retains, revises, or skips in the next round.</p>
+    </div>
+    <article class="story-panel history-story" aria-labelledby="history-record-title">
+      <header class="story-subhead">
+        <div>
+          <span class="micro-label">ROBOCASA365 · ARCHIVED DEVELOPMENT RUN</span>
+          <h3 id="history-record-title">What the Scheduler remembers</h3>
+        </div>
+        <div class="chip-group" data-history-options role="group" aria-label="Choose a task history record"></div>
+      </header>
+      <div class="history-record" data-history-record></div>
+      <a class="text-link history-results-link" href="#rounds-chart">See full-task results by round <span>↓</span></a>
+    </article>
+  </div>
+</section>
+
+<section class="section section-border wrap" id="demos">
+  <div class="section-heading"><span class="section-kicker">DEMOS</span><h2>Watch ReFocus <em>in action.</em></h2></div>
+  <div id="simulation-demos" class="demo-block">
+    <div class="demo-section-header"><h3>Simulation</h3><span class="video-speed-label">3× PLAYBACK</span></div>
+    <div data-simulation-cases></div>
+  </div>
+  <template id="video-case-template">
+    <figure class="video-case">
+      <video controls playsinline muted preload="none"></video>
+      <figcaption>
+        <div class="video-case-copy"><strong data-case-title></strong><span class="video-case-outcome" data-case-outcome hidden></span></div>
+      </figcaption>
+    </figure>
+  </template>
+</section>
+<section class="section results-section" id="results"><div class="wrap"><div class="section-heading"><div class="section-kicker"><span>PART II</span> EXPERIMENTS</div><h2>From local practice to<br><em>full-task progress.</em></h2><p>ReFocus improves the SFT-initialized π<sub>0.5</sub> policy across two long-horizon simulation benchmarks. Scores below are reported full-task success rates.</p></div>
+<div class="rounds-panel" id="rounds-chart"><div class="rounds-title"><div><span class="micro-label">SUCCESS ACROSS OPTIMIZATION ROUNDS</span><h3>Practice, round by round.</h3></div><span class="rounds-detail">FULL-TASK SUCCESS RATE</span></div><p class="chart-lede">Each point is a full-task evaluation.</p><div class="plot-grid"><div class="plot-card"><div class="plot-heading"><div><span class="micro-label">BENCHMARK 01</span><h4>LIBERO-Long</h4></div><strong id="value-libero">90.6%</strong></div><svg class="line-chart" viewBox="0 0 480 220" role="img" aria-label="LIBERO-Long success rates by round. SFT 90.6%, Round 1 92.4%, Round 2 94.6%, Round 3 97.8%."><g class="gridlines"><path d="M50 30H450 M50 97H450 M50 164H450"/></g><g class="axis-labels"><text x="38" y="34" text-anchor="end">100</text><text x="38" y="101" text-anchor="end">95</text><text x="38" y="168" text-anchor="end">90</text><text x="70" y="200" text-anchor="middle">SFT</text><text x="193" y="200" text-anchor="middle">R1</text><text x="317" y="200" text-anchor="middle">R2</text><text x="440" y="200" text-anchor="middle">R3</text></g><path class="line-area area-libero" d="M70 155.96 L193 131.84 L317 102.36 L440 59.48 L440 164 L70 164 Z"/><path class="line-path stroke-libero" pathLength="1" d="M70 155.96 L193 131.84 L317 102.36 L440 59.48"/><g class="plot-points libero-points"><circle cx="70" cy="155.96" r="5"/><circle cx="193" cy="131.84" r="5"/><circle cx="317" cy="102.36" r="5"/><circle cx="440" cy="59.48" r="5"/></g><circle class="current-point libero-current" cx="70" cy="155.96" r="8"/></svg><div class="plot-axis">SUCCESS RATE (%) <span>90–100%</span></div></div><div class="plot-card"><div class="plot-heading"><div><span class="micro-label">BENCHMARK 02</span><h4>RoboCasa365</h4></div><strong id="value-robocasa">39.3%</strong></div><svg class="line-chart" viewBox="0 0 480 220" role="img" aria-label="RoboCasa365 success rates by round. SFT 39.3%, Round 1 42.5%, Round 2 47.6%, Round 3 51.3%."><g class="gridlines"><path d="M50 30H450 M50 97H450 M50 164H450"/></g><g class="axis-labels"><text x="38" y="34" text-anchor="end">55</text><text x="38" y="101" text-anchor="end">45</text><text x="38" y="168" text-anchor="end">35</text><text x="70" y="200" text-anchor="middle">SFT</text><text x="193" y="200" text-anchor="middle">R1</text><text x="317" y="200" text-anchor="middle">R2</text><text x="440" y="200" text-anchor="middle">R3</text></g><path class="line-area area-robocasa" d="M70 135.19 L193 113.75 L317 79.58 L440 54.79 L440 164 L70 164 Z"/><path class="line-path stroke-robocasa" pathLength="1" d="M70 135.19 L193 113.75 L317 79.58 L440 54.79"/><g class="plot-points robocasa-points"><circle cx="70" cy="135.19" r="5"/><circle cx="193" cy="113.75" r="5"/><circle cx="317" cy="79.58" r="5"/><circle cx="440" cy="54.79" r="5"/></g><circle class="current-point robocasa-current" cx="70" cy="135.19" r="8"/></svg><div class="plot-axis">SUCCESS RATE (%) <span>35–55%</span></div></div></div><p class="chart-caption">The charts use different vertical ranges to show changes within each benchmark. R1–R3 denote successive rounds of Global and Local RL.</p></div>
+<section class="results-explorer round-video-explorer" id="round-rollouts">
+  <div class="demo-section-header"><h3>RoboCasa365 rollouts by round</h3><span class="video-speed-label">3× PLAYBACK</span></div>
+  <div class="chip-group round-video-options" data-round-video-options role="group" aria-label="Choose a RoboCasa365 rollout round"></div>
+  <div data-round-video-cases></div>
+</section>
+<div class="results-explorer" id="comparison">
+  <div class="explorer-top"><div><span class="micro-label">PAPER TABLE 1</span><h3>Simulation benchmarks</h3></div>
+    <div class="chip-group" data-result-options role="group" aria-label="Simulation horizon"></div>
+  </div>
+  <div class="chart-gallery simulation-gallery" data-result-charts></div>
+  <p class="chart-detail" data-result-detail aria-live="polite">Select any bar to inspect its result.</p>
+</div>
+<div class="results-explorer" id="real-results">
+  <div class="explorer-top"><div><span class="micro-label">PAPER TABLE 5</span><h3>Real-robot tasks</h3></div></div>
+  <div class="chart-gallery" data-physical-charts></div>
+  <p class="chart-detail" data-physical-detail aria-live="polite">Select any bar to inspect its result.</p>
+</div>
+<section id="real-demos" class="demo-block">
+  <div class="demo-section-header"><h3>Real robot <small>Unitree G1-D</small></h3><span class="video-speed-label">3× PLAYBACK</span></div>
+  <section id="stackbowl-comparison" class="real-comparison" data-real-comparison aria-labelledby="stackbowl-comparison-title">
+    <header class="real-comparison-header">
+      <h4 id="stackbowl-comparison-title">StackBowl comparison</h4>
+      <q>Pick up the bowls on the right and left and stack them onto the bowl in the middle.</q>
+    </header>
+    <div class="real-comparison-methods">
+      <strong>π₀.₅ SFT</strong><strong>RECAP</strong><span><strong>ReFocus</strong> <small>20/20</small></span>
+    </div>
+    <div class="rollout-media">
+      <video src="assets/demos/real/stackbowl-recap-sft-refocus.mp4" poster="assets/demos/real/stackbowl-recap-sft-refocus.jpg" controls playsinline muted preload="none" aria-label="StackBowl rollouts, left to right: SFT, RECAP, ReFocus"></video>
+      <div class="real-comparison-outcomes">
+        <div data-method="π₀.₅ SFT" data-outcome="Success" data-finish-at="43.9"></div>
+        <div data-method="RECAP" data-outcome="Success" data-finish-at="31.366667"></div>
+        <div data-method="ReFocus" data-outcome="Success" data-finish-at="26"></div>
+      </div>
+    </div>
+  </section>
+  <section id="pickfruit-comparison" class="real-comparison" data-real-comparison aria-labelledby="pickfruit-comparison-title">
+    <header class="real-comparison-header">
+      <h4 id="pickfruit-comparison-title">PickFruit comparison</h4>
+      <q>Put the apple and the mangosteen on the plate.</q>
+    </header>
+    <div class="real-comparison-methods">
+      <strong>π₀.₅ SFT</strong><strong>RECAP</strong><span><strong>ReFocus</strong> <small>20/20</small></span>
+    </div>
+    <div class="rollout-media">
+      <video src="assets/demos/real/pickfruit-sft-recap-refocus.mp4" poster="assets/demos/real/pickfruit-sft-recap-refocus.jpg" controls playsinline muted preload="none" aria-label="PickFruit rollouts, left to right: SFT, RECAP, ReFocus"></video>
+      <div class="real-comparison-outcomes">
+        <div data-method="π₀.₅ SFT" data-outcome="Failure" data-finish-at="32.1"></div>
+        <div data-method="RECAP" data-outcome="Failure" data-finish-at="35.7"></div>
+        <div data-method="ReFocus" data-outcome="Success" data-finish-at="32.333333"></div>
+      </div>
+    </div>
+  </section>
+  <section id="breadbaker-comparison" class="real-comparison" data-real-comparison aria-labelledby="breadbaker-comparison-title">
+    <header class="real-comparison-header">
+      <h4 id="breadbaker-comparison-title">BreadBaker comparison</h4>
+      <q>Pick up the bread from the plate, place it into the toaster, and then press the toaster's switch.</q>
+    </header>
+    <div class="real-comparison-methods">
+      <strong>π₀.₅ SFT</strong><strong>RECAP</strong><span><strong>ReFocus</strong> <small>19/20</small></span>
+    </div>
+    <div class="rollout-media">
+      <video src="assets/demos/real/breadbaker-comparison.mp4" poster="assets/demos/real/breadbaker-comparison.jpg" controls playsinline muted preload="none" aria-label="BreadBaker rollouts, left to right: SFT, RECAP, ReFocus"></video>
+      <div class="real-comparison-outcomes">
+        <div data-method="π₀.₅ SFT" data-outcome="Failure" data-finish-at="71.9"></div>
+        <div data-method="RECAP" data-outcome="Failure" data-finish-at="57.466667"></div>
+        <div data-method="ReFocus" data-outcome="Success" data-finish-at="39.366667"></div>
+      </div>
+    </div>
+  </section>
+</section>
+<div class="results-explorer" id="ablations">
+  <div class="explorer-top"><div><span class="micro-label">PAPER TABLES 2–4 AND 13</span><h3>Ablation studies</h3></div>
+    <div class="chip-group" data-ablation-options role="group" aria-label="Ablation horizon"></div>
+  </div>
+  <div class="chart-gallery ablation-gallery" data-ablation-charts></div>
+  <p class="chart-detail" data-ablation-detail aria-live="polite">Select any bar to inspect its result.</p>
+</div>
+</div></section>
+
+<section class="section section-border wrap" id="value-models">
+  <div class="section-heading">
+    <h2>Credit and value <em>along a rollout.</em></h2>
+    <p>The curves follow playback. Select a keyframe to jump to that point in the rollout.</p>
+  </div>
+  <div class="story-panel trace-story" id="gae" data-trace="gae">
+    <div class="story-subhead"><div><span class="micro-label">ROBOCASA365 · STORELEFTOVERSINBOWL</span><h3>GAE with progress and milestone rewards</h3></div></div>
+    <p class="trace-note">Offline comparison on one failed rollout with fixed critic predictions. The window curve credits visually annotated lift and transfer milestones.</p>
+    <div class="trace-content">
+      <figure class="trace-camera-pair">
+        <figcaption><span>External camera</span><span>Wrist camera</span></figcaption>
+        <video class="trace-video" id="gae-rollout" src="assets/stories/gae-multiview.mp4" poster="assets/stories/gae-multiview.jpg" controls playsinline muted preload="none" data-rollout-outcome="Failure" aria-label="Failed StoreLeftoversInBowl rollout, external and wrist cameras"></video>
+      </figure>
+    </div>
+  </div>
+  <div class="story-panel trace-story" id="recap-value" data-trace="recap">
+    <div class="story-subhead"><div><span class="micro-label">UNITREE G1-D · BREADBAKER</span><h3>RECAP value model</h3></div></div>
+    <p class="trace-note">Critic predictions with and without progress rewards on the same images. Both episodes were included in critic training.</p>
+    <div class="trace-case-grid">
+      <section class="trace-case">
+        <h4>Successful rollout</h4>
+        <div class="trace-content" data-trace-index="0">
+          <video class="trace-video" id="recap-success-rollout" src="assets/stories/recap-value-success.mp4" poster="assets/stories/recap-value-success.jpg" controls playsinline muted preload="none" data-rollout-outcome="Success" aria-label="Successful BreadBaker rollout"></video>
+        </div>
+      </section>
+      <section class="trace-case">
+        <h4>Failed rollout</h4>
+        <div class="trace-content" data-trace-index="1">
+          <video class="trace-video" id="recap-failure-rollout" src="assets/stories/recap-value-failure.mp4" poster="assets/stories/recap-value-failure.jpg" controls playsinline muted preload="none" data-rollout-outcome="Failure" aria-label="Failed BreadBaker rollout"></video>
+        </div>
+      </section>
+    </div>
+  </div>
+</section>
+<section class="closing"><div class="wrap closing-inner"><div><span class="micro-label">REFOCUS · RESEARCH PROJECT</span><h2>Progress tells us<br><em>where to practice.</em></h2></div><div class="closing-mark">✳</div></div></section>
+</main><footer><div class="wrap footer-inner"><span class="brand"><span class="brand-mark">✳</span> Re<span>Focus</span></span><span>Progress-guided adaptive practice for long-horizon robotic manipulation</span><a href="#top">BACK TO TOP ↑</a></div></footer>
+</body>
+</html>

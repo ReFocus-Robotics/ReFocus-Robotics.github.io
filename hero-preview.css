@@ -1,0 +1,76 @@
+.hero { padding-top: 0 }
+.hero-intro {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  min-height: 690px;
+  min-height: clamp(690px, 94svh, 1040px);
+  overflow: hidden;
+  padding: 120px 0 98px;
+  background: #090e13;
+  color: #f5faf7;
+}
+.rollout-wall {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  display: grid;
+  grid-template: repeat(5, minmax(0, 1fr)) / repeat(6, minmax(0, 1fr));
+  gap: 3px;
+  pointer-events: none;
+}
+.rollout-wall picture { display: block; overflow: hidden; background: #182622 }
+.rollout-wall img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.65) }
+.hero-intro::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse at center, rgb(6 12 16 / .73) 0%, rgb(7 13 17 / .43) 55%, transparent 92%),
+    linear-gradient(180deg, rgb(6 12 17 / .72), rgb(8 16 22 / .25) 45%, #0c0f0f 100%);
+}
+.hero-intro h1 { text-shadow: 0 3px 22px #05090c }
+.hero-intro .hero-eyebrow, .hero-intro .hero-title-accent { color: #a6e1c6 }
+.hero-intro .hero-title-colon { color: #fa9a60 }
+.hero-intro .hero-title-detail {
+  display: block;
+  max-width: 880px;
+  margin: 20px auto 0;
+  color: inherit;
+  font-size: clamp(24px, 3.5vw, 45px);
+  line-height: 1.1;
+  letter-spacing: -.025em;
+  text-wrap: balance;
+}
+.hero-intro .hero-description, .hero-intro .hero-meta { color: #ebf2ef }
+.hero-intro .hero-description { max-width: 560px; text-shadow: 0 1px 8px #06090c }
+.hero-intro .btn.primary { background: #9ce0c0; color: #0c221a }
+.hero-intro .btn.secondary { border-color: #819b90; background: #101a1ad9; color: #f1f4ef }
+.motion-toggle { position:absolute; right: 22px; bottom: 20px; background:#121c20e0; color:#dcebe5; border:1px solid #667b76; border-radius:7px; padding:7px 11px; font-size:12px; cursor:pointer }
+.hero-highlights { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px; text-align:left; margin:42px auto 0 }
+.hero-highlights > div { border-top:1px solid var(--line); padding:16px 0 8px }
+.hero-highlights dt { color:var(--muted); font:500 11px/1.4 var(--mono) }
+.hero-highlights dd { margin:0 }
+.hero-highlights strong { display:block; color:var(--teal); font:400 clamp(39px,5.1vw,68px)/1.15 var(--serif); font-variant-numeric:tabular-nums; letter-spacing:-.045em; margin:7px 0 }
+.hero-highlights strong span { font-size:.52em }
+.hero-highlights small { color:var(--muted); font-size:12px }
+.hero-visual { margin-top:36px }
+@media (max-width: 760px) {
+  .hero-intro { min-height: min(740px, 100svh); padding:98px 0 65px }
+  .rollout-wall { grid-template: repeat(6,minmax(0,1fr)) / repeat(3,minmax(0,1fr)); gap:2px }
+  .rollout-wall picture:nth-child(n+19) { display:none }
+  .hero-highlights { gap:10px; margin-top:24px }
+  .hero-highlights dt { min-height:3em; font-size:9px }
+  .hero-highlights strong { font-size:clamp(25px,7vw,45px) }
+  .hero-highlights small { display:block; font-size:10px; line-height:1.45 }
+}
+@media (prefers-reduced-motion:reduce) { .motion-toggle { display:none } }
+
+@media (max-width: 380px) {
+  .nav-inner { gap: 8px; padding-inline: 10px; }
+  .nav-inner .brand { font-size: 16px; }
+  .nav-inner .brand-mark { font-size: 19px; margin-right: 3px; }
+  .nav-links { gap: 6px; font-size: 10px; white-space: nowrap; }
+}
