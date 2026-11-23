@@ -1,5 +1,5 @@
 const defaultVideoRate = 3
-const allCaseVideos = document.querySelectorAll('video')
+const allCaseVideos = document.querySelectorAll('video:not([data-manual-playback])')
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 const visibleVideos = new WeakSet()
 const autoStartedVideos = new WeakSet()

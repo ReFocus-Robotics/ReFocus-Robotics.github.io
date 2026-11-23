@@ -44,8 +44,47 @@
   letter-spacing: -.025em;
   text-wrap: balance;
 }
-.hero-intro .hero-description, .hero-intro .hero-meta { color: #ebf2ef }
-.hero-intro .hero-description { max-width: 560px; text-shadow: 0 1px 8px #06090c }
+.hero-byline {
+  max-width: 880px;
+  margin: 24px auto 0;
+  color: #f1f6f3;
+  text-shadow: 0 1px 10px #06090c;
+}
+.hero-byline ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+}
+.hero-authors {
+  margin: 0;
+  gap: 4px clamp(12px, 2vw, 24px);
+  font-size: clamp(16px, 2vw, 21px);
+  line-height: 1.55;
+}
+.hero-byline sup { color: #a6e1c6; margin-inline: 2px; }
+.hero-affiliations {
+  margin: 12px 0 0;
+  gap: 2px 24px;
+  font-size: clamp(15px, 1.75vw, 18px);
+  font-weight: 700;
+}
+.hero-author-note { margin: 5px 0 0; font-size: 14px; color: #d5e2dc; }
+.hero-video {
+  max-width: 840px;
+  margin: clamp(22px, 3vw, 34px) auto 0;
+  border: 1px solid rgb(191 214 204 / .35);
+  border-radius: 14px;
+  overflow: hidden;
+  background: #090e13;
+}
+.hero-video video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+}
 .hero-intro .btn.primary { background: #9ce0c0; color: #0c221a }
 .hero-intro .btn.secondary { border-color: #819b90; background: #101a1ad9; color: #f1f4ef }
 .motion-toggle { position:absolute; right: 22px; bottom: 20px; background:#121c20e0; color:#dcebe5; border:1px solid #667b76; border-radius:7px; padding:7px 11px; font-size:12px; cursor:pointer }

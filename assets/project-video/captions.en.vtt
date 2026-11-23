@@ -1,0 +1,133 @@
+WEBVTT
+
+00:01.000 --> 00:04.112
+A long task is a chain of small successes.
+
+00:04.288 --> 00:07.013
+Miss one link, and it scores zero.
+
+00:09.800 --> 00:12.294
+Different tasks stall at different stages,
+
+00:12.364 --> 00:14.781
+so each needs its own diagnosis.
+
+00:18.567 --> 00:22.506
+We present ReFocus: Progress-Guided Adaptive Practice
+
+00:22.536 --> 00:26.421
+for Long-Horizon Robotic Manipulation Reinforcement Learning.
+
+00:27.933 --> 00:29.731
+The robot must fill a bowl,
+
+00:29.815 --> 00:31.342
+then store it in the fridge.
+
+00:31.542 --> 00:34.075
+First, it places the vegetable in the bowl.
+
+00:34.375 --> 00:36.172
+Next, it adds the chicken.
+
+00:36.472 --> 00:38.142
+Then it stalls at the fridge.
+
+00:38.642 --> 00:42.632
+Terminal reward: zero. Both completions ignored.
+
+00:43.733 --> 00:45.158
+Here is the pipeline.
+
+00:45.258 --> 00:48.305
+Global RL measures progress on the whole task.
+
+00:48.405 --> 00:50.899
+Local RL practices the bottleneck.
+
+00:50.999 --> 00:53.738
+Evaluation checks the whole task again.
+
+00:55.233 --> 00:57.611
+At its core is a task DAG.
+
+00:58.611 --> 01:01.440
+Every stage gets an equal share of reward.
+
+01:02.040 --> 01:06.557
+On MugInMicrowave, the success rate rises to 92 percent,
+
+01:06.731 --> 01:09.701
+from 68 percent with sparse rewards.
+
+01:11.000 --> 01:15.916
+Failed rollouts help too: the advantage rises where progress was made.
+
+01:18.300 --> 01:20.639
+Then ReFocus practices the stall,
+
+01:20.787 --> 01:22.650
+starting from the window entry.
+
+01:22.750 --> 01:27.344
+Normal, prefix, and suffix rollouts practice it in context.
+
+01:29.433 --> 01:33.048
+A history buffer records each window's cost and effect.
+
+01:33.648 --> 01:39.121
+After three rounds, ReFocus reaches 97.8 percent on LIBERO-Long
+
+01:39.151 --> 01:43.500
+and 51.3 percent on RoboCasa365.
+
+01:45.100 --> 01:48.341
+ReFocus outperforms other online RL methods,
+
+01:48.476 --> 01:53.934
+with the highest overall success rate on LIBERO-Long and RoboCasa365.
+
+01:55.933 --> 01:58.350
+Here is the success rate on each task,
+
+01:58.614 --> 02:00.992
+each evaluated over 50 episodes.
+
+02:03.700 --> 02:06.439
+On a Unitree G1 humanoid robot,
+
+02:06.664 --> 02:09.531
+we compare against SFT and RECAP.
+
+02:09.731 --> 02:13.449
+StackBowl: ReFocus reaches 100%,
+
+02:13.662 --> 02:17.947
+versus 80% for SFT and 90% for RECAP.
+
+02:19.833 --> 02:26.541
+On PickFruit, 100%, versus 75% and 85%.
+
+02:28.833 --> 02:31.084
+And on BreadBaker, the hardest,
+
+02:31.114 --> 02:35.773
+95%, versus 30% and 70%.
+
+02:38.467 --> 02:41.515
+We visualize the value model trained by RECAP:
+
+02:41.598 --> 02:45.136
+with ReFocus, its value is far steadier.
+
+02:48.433 --> 02:49.986
+Reward the progress.
+
+02:50.186 --> 02:51.739
+Practice the bottleneck.
+
+02:51.939 --> 02:54.047
+Practice, round by round.
+
+02:57.047 --> 02:58.793
+This, is ReFocus.
