@@ -72,7 +72,6 @@
 }
 .hero-author-note { margin: 5px 0 0; font-size: 14px; color: #d5e2dc; }
 .project-video {
-  max-width: 1000px;
   margin: clamp(24px, 4vw, 48px) auto;
   scroll-margin-top: 90px;
   border: 1px solid rgb(191 214 204 / .35);
