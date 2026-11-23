@@ -71,15 +71,16 @@
   font-weight: 700;
 }
 .hero-author-note { margin: 5px 0 0; font-size: 14px; color: #d5e2dc; }
-.hero-video {
-  max-width: 840px;
-  margin: clamp(22px, 3vw, 34px) auto 0;
+.project-video {
+  max-width: 1000px;
+  margin: clamp(24px, 4vw, 48px) auto;
+  scroll-margin-top: 90px;
   border: 1px solid rgb(191 214 204 / .35);
   border-radius: 14px;
   overflow: hidden;
   background: #090e13;
 }
-.hero-video video {
+.project-video video {
   display: block;
   width: 100%;
   height: auto;
