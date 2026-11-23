@@ -457,10 +457,6 @@
   gap: 10px;
 }
 
-.ablation-gallery {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
 .mini-chart {
   --plot-height: 142px;
   display: grid;

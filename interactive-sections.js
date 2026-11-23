@@ -157,20 +157,6 @@ const mainData = [
   {title:'PickFruit', labels:realMethods, rows:[[75],[85],[100]]},
   {title:'BreadBaker', labels:realMethods, rows:[[30],[70],[95]]}
 ]
-const liberoHorizons = mainData[0].horizons
-const ablationData = [
-  {title:'Progress Reward & Practice Window', benchmark:'LIBERO-Long', horizons:liberoHorizons, labels:['Neither','Reward only','Window only','Both'],
-    rows:[[92.6,97.6,94.7,77],[96.8,98,98.7,91],[93.4,98,95.3,79],[97.8,99.2,98.7,93]]},
-  {title:'Local RL rollout modes', benchmark:'LIBERO-Long', horizons:liberoHorizons, labels:['Normal','+ Suffix','+ Prefix','All three'],
-    rows:[[95.4,98,96,88],[96.4,98,96.7,92],[96.8,98.8,98,90],[97.8,99.2,98.7,93]]},
-  {title:'Global RL reward feedback', benchmark:'LIBERO-Long', horizons:liberoHorizons, labels:['Sparse','Structured','Stage-balanced'],
-    rows:[[93.4,98,95.3,79],[95.2,98.4,97.3,84],[97.8,99.2,98.7,93]]},
-  {title:'Scheduler model', benchmark:'RoboCasa365', horizons:mainData[1].horizons,
-    axisByHorizon:[[45,55],[55,65],[50,60],[40,50]],
-    labels:['Qwen3.8-27B','Opus 5.5','Fable 5.1','GPT-6 Astra'],
-    rows:[[48.8,56,52.6,43.8],[49.3,58.3,52.4,44],[50.7,59.3,53.4,45.8],[51.3,59.7,54.2,46.4]],
-    costs:['$0.05 per task','$0.51 per task','$1.28 per task','$1.28 per task']}
-]
 const valueText = value => value.toFixed(1) + '%'
 function chartExplorer(prefix, data) {
   const group = document.querySelector('[data-' + prefix + '-options]')
@@ -196,7 +182,7 @@ function chartExplorer(prefix, data) {
       const column = item.horizons ? index : 0
       const values = item.rows.map(row => row[column])
       const max = Math.max(...values)
-      const axis = item.axisByHorizon?.[column] ?? item.axis
+      const axis = item.axis
       const [preferredMin, preferredMax] = axis ?? [0, 100]
       const step = axis ? 5 : 50
       const min = Math.min(preferredMin, Math.floor(Math.min(...values) / step) * step)
@@ -204,8 +190,7 @@ function chartExplorer(prefix, data) {
       const intervals = (upper - min) / step
       const ticks = Array.from({length: intervals + 1}, (_, i) =>
         '<span style="top:' + (i * 100 / intervals) + '%">' + (upper - i * step) + '</span>').join('')
-      const groupLabel = item.horizons ? item.horizons[column] : 'Real robot'
-      const context = item.benchmark ? item.benchmark + ' · ' + groupLabel : groupLabel
+      const context = item.horizons ? item.horizons[column] : 'Real robot'
       const card = document.createElement('div')
       card.className = 'mini-chart'
       card.innerHTML = '<h4>' + item.title + '</h4><p>' + context + ' · Success rate (%)</p>' +
@@ -219,7 +204,7 @@ function chartExplorer(prefix, data) {
         const show = () => {
           gallery.querySelectorAll('button[aria-pressed="true"]').forEach(active => active.setAttribute('aria-pressed', 'false'))
           bar.setAttribute('aria-pressed','true')
-          detail.textContent = item.title + ' · ' + context + ' · ' + label + ' · ' + valueText(value) + (item.costs ? ' · ' + item.costs[i] : '')
+          detail.textContent = item.title + ' · ' + context + ' · ' + label + ' · ' + valueText(value)
         }
         const bar = button(label, false, show)
         bar.className = 'bar-button' + (value === max && i === item.labels.length - 1 ? ' bar-best' : '')
@@ -242,4 +227,3 @@ function chartExplorer(prefix, data) {
 }
 chartExplorer('result', mainData.filter(item => item.horizons))
 chartExplorer('physical', mainData.filter(item => !item.horizons))
-chartExplorer('ablation', ablationData)
