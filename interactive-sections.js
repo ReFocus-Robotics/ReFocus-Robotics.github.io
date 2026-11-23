@@ -166,6 +166,7 @@ const ablationData = [
   {title:'Global RL reward feedback', benchmark:'LIBERO-Long', horizons:liberoHorizons, labels:['Sparse','Structured','Stage-balanced'],
     rows:[[93.4,98,95.3,79],[95.2,98.4,97.3,84],[97.8,99.2,98.7,93]]},
   {title:'Scheduler model', benchmark:'RoboCasa365', horizons:mainData[1].horizons,
+    axisByHorizon:[[45,55],[55,65],[50,60],[40,50]],
     labels:['Qwen3.8-27B','Opus 5.5','Fable 5.1','GPT-6 Astra'],
     rows:[[48.8,56,52.6,43.8],[49.3,58.3,52.4,44],[50.7,59.3,53.4,45.8],[51.3,59.7,54.2,46.4]],
     costs:['$0.05 per task','$0.51 per task','$1.28 per task','$1.28 per task']}
@@ -195,8 +196,9 @@ function chartExplorer(prefix, data) {
       const column = item.horizons ? index : 0
       const values = item.rows.map(row => row[column])
       const max = Math.max(...values)
-      const [preferredMin, preferredMax] = item.axis ?? [0, 100]
-      const step = item.axis ? 5 : 50
+      const axis = item.axisByHorizon?.[column] ?? item.axis
+      const [preferredMin, preferredMax] = axis ?? [0, 100]
+      const step = axis ? 5 : 50
       const min = Math.min(preferredMin, Math.floor(Math.min(...values) / step) * step)
       const upper = Math.max(preferredMax, Math.ceil(max / step) * step)
       const intervals = (upper - min) / step
