@@ -8,6 +8,17 @@
   min-width: 0;
 }
 
+.practice-allocation .story-subhead { align-items: baseline; }
+.practice-allocation-chart {
+  display: block;
+  margin: 18px 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.practice-allocation-chart img { display: block; width: 100%; height: auto; }
+.practice-allocation figcaption p { max-width: 75ch; margin: 0 0 9px; color: var(--muted); font-size: 14px; }
+
 .story-heading {
   max-width: 770px;
   margin-bottom: 22px;

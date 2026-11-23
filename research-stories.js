@@ -234,6 +234,7 @@ document.querySelectorAll('[data-trace]').forEach(story => {
 })
 
 // Task-level excerpts from round3_context.json's archived intervention_history.
+// Bottleneck steps were counted from the archived training stage events.
 // Evaluation counts use the recorded checkpoints at updates 75, 80, and 100.
 const historyExamples = [
   {
@@ -243,7 +244,8 @@ const historyExamples = [
     target: 'Bowl in Fridge',
     budget: 600,
     evidence: 'Vegetable in bowl at step 156 and chicken in bowl at step 708. The rollout reached its 2,900-step limit with the fridge placement still unverified.',
-    costs: [[84, 43266, 41500], [30, 43732, 15950], [39, 83798, 0]],
+    interactions: [[84, 43266, 42437], [30, 43732, 41429], [39, 83798, 52914]],
+    archivedReplaySteps: 57450,
     evaluations: [[3, 5], [1, 5], [1, 5]],
     delta: -40
   },
@@ -254,7 +256,8 @@ const historyExamples = [
     target: 'Dishwasher closed',
     budget: 500,
     evidence: 'The first dish reached the rack at step 422 and the second at step 675. The rollout reached its 2,900-step limit with the door closure still unverified.',
-    costs: [[120, 36209, 76550], [50, 39546, 32050], [58, 91678, 0]],
+    interactions: [[120, 36209, 36003], [50, 39546, 24800], [58, 91678, 24118]],
+    archivedReplaySteps: 108600,
     evaluations: [[4, 5], [5, 5], [5, 5]],
     delta: 20
   }
@@ -264,7 +267,7 @@ const historyRecord = document.querySelector('[data-history-record]')
 let selectedHistory = 0
 const historyCycle = createTabCycle(() => renderHistory((selectedHistory + 1) % historyExamples.length))
 const historyNumber = new Intl.NumberFormat('en-US')
-const archivedModes = ['Local window', 'Suffix', 'Global']
+const archivedModes = ['Normal Window', 'Suffix Window', 'Normal start']
 const historyCheckpoints = [
   ['Before Local RL', 75],
   ['After 5 Local updates', 80],
@@ -306,7 +309,7 @@ function renderHistory(index) {
   historyObserver?.disconnect()
   const animate = historyObserver && !dataMotion.matches
   const count = animate ? historyCount : (value, sign) => formatHistoryCount(Math.abs(value), sign)
-  const { archiveTask, entry, target, budget, evidence, costs, evaluations, delta } = historyExamples[index]
+  const { archiveTask, entry, target, budget, evidence, interactions, archivedReplaySteps, evaluations, delta } = historyExamples[index]
   historyRecord.innerHTML = `
     <p class="history-record-id"><code>${archiveTask}</code><code>round_01</code></p>
     <div class="history-record-grid">
@@ -326,13 +329,14 @@ function renderHistory(index) {
         <p><strong>${count(budget)} steps</strong> max per window · Milestones unlisted in this record</p>
       </section>
       <section class="history-field" data-history-animate>
-        <h4>Realized rollout costs</h4>
-        <table aria-label="Realized rollout costs by mode in control steps">
-          <thead><tr><th scope="col">Mode</th><th scope="col">Rollouts</th><th scope="col">Fresh steps</th><th scope="col">Replay steps</th></tr></thead>
-          <tbody>${costs.map((row, i) => `
+        <h4>Training interactions by rollout mode</h4>
+        <table aria-label="Archived rollout counts and new controls spent in the target stage">
+          <thead><tr><th scope="col">Mode</th><th scope="col">Rollouts</th><th scope="col">Fresh steps</th><th scope="col">Bottleneck steps</th></tr></thead>
+          <tbody>${interactions.map((row, i) => `
             <tr><th scope="row">${archivedModes[i]}</th>${row.map(value => `<td>${count(value)}</td>`).join('')}</tr>
           `).join('')}</tbody>
         </table>
+        <p>The archived run also used ${historyNumber.format(archivedReplaySteps)} prefix-replay steps. The current release restores snapshots directly.</p>
       </section>
       <section class="history-field" data-history-animate>
         <h4>Normal-start full-task success</h4>

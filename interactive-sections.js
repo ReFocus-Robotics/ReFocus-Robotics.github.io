@@ -165,8 +165,10 @@ const ablationData = [
     rows:[[95.4,98,96,88],[96.4,98,96.7,92],[96.8,98.8,98,90],[97.8,99.2,98.7,93]]},
   {title:'Global RL reward feedback', benchmark:'LIBERO-Long', horizons:liberoHorizons, labels:['Sparse','Structured','Stage-balanced'],
     rows:[[93.4,98,95.3,79],[95.2,98.4,97.3,84],[97.8,99.2,98.7,93]]},
-  {title:'Scheduler model', benchmark:'RoboCasa365', horizons:mainData[1].horizons, labels:['Qwen3.8-27B','GPT-6 Astra'], rows:[[48.8,56,52.6,43.8],[51.3,59.7,54.2,46.4]],
-    costs:['$0.05 per task','$1.28 per task']}
+  {title:'Scheduler model', benchmark:'RoboCasa365', horizons:mainData[1].horizons,
+    labels:['Qwen3.8-27B','Opus 5.5','Fable 5.1','GPT-6 Astra'],
+    rows:[[48.8,56,52.6,43.8],[49.3,58.3,52.4,44],[50.7,59.3,53.4,45.8],[51.3,59.7,54.2,46.4]],
+    costs:['$0.05 per task','$0.51 per task','$1.28 per task','$1.28 per task']}
 ]
 const valueText = value => value.toFixed(1) + '%'
 function chartExplorer(prefix, data) {
