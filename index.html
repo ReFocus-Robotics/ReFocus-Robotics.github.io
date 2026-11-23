@@ -10,12 +10,11 @@
 <link rel="stylesheet" href="style.css?v=2">
 <link rel="stylesheet" href="hero-preview.css?v=7">
 <link rel="stylesheet" href="interactive-sections.css?v=5">
-<link rel="stylesheet" href="research-stories.css?v=6">
+<link rel="stylesheet" href="research-stories.css?v=7">
 <link rel="stylesheet" href="demo-gallery.css">
 <script defer src="script.js?v=4"></script>
 <script defer src="interactive-sections.js?v=6"></script>
-<script defer src="assets/stories/trajectory-data.js?v=2"></script>
-<script defer src="research-stories.js?v=5"></script>
+<script defer src="research-stories.js?v=6"></script>
 <script defer src="demo-gallery.js?v=2"></script>
 <script defer src="video-playback.js?v=5"></script>
 </head>
@@ -379,40 +378,6 @@
 </section>
 </div></section>
 
-<section class="section section-border wrap" id="value-models">
-  <div class="section-heading">
-    <h2>Credit and value <em>along a rollout.</em></h2>
-    <p>The curves follow playback. Select a keyframe to jump to that point in the rollout.</p>
-  </div>
-  <div class="story-panel trace-story" id="gae" data-trace="gae">
-    <div class="story-subhead"><div><span class="micro-label">ROBOCASA365 · STORELEFTOVERSINBOWL</span><h3>GAE with progress and milestone rewards</h3></div></div>
-    <p class="trace-note">Offline comparison on one failed rollout with fixed critic predictions. The window curve credits visually annotated lift and transfer milestones.</p>
-    <div class="trace-content">
-      <figure class="trace-camera-pair">
-        <figcaption><span>External camera</span><span>Wrist camera</span></figcaption>
-        <video class="trace-video" id="gae-rollout" src="assets/stories/gae-multiview.mp4" poster="assets/stories/gae-multiview.jpg" controls playsinline muted preload="none" data-rollout-outcome="Failure" aria-label="Failed StoreLeftoversInBowl rollout, external and wrist cameras"></video>
-      </figure>
-    </div>
-  </div>
-  <div class="story-panel trace-story" id="recap-value" data-trace="recap">
-    <div class="story-subhead"><div><span class="micro-label">UNITREE G1-D · BREADBAKER</span><h3>RECAP value model</h3></div></div>
-    <p class="trace-note">Critic predictions with and without progress rewards on the same images. Both episodes were included in critic training.</p>
-    <div class="trace-case-grid">
-      <section class="trace-case">
-        <h4>Successful rollout</h4>
-        <div class="trace-content" data-trace-index="0">
-          <video class="trace-video" id="recap-success-rollout" src="assets/stories/recap-value-success.mp4" poster="assets/stories/recap-value-success.jpg" controls playsinline muted preload="none" data-rollout-outcome="Success" aria-label="Successful BreadBaker rollout"></video>
-        </div>
-      </section>
-      <section class="trace-case">
-        <h4>Failed rollout</h4>
-        <div class="trace-content" data-trace-index="1">
-          <video class="trace-video" id="recap-failure-rollout" src="assets/stories/recap-value-failure.mp4" poster="assets/stories/recap-value-failure.jpg" controls playsinline muted preload="none" data-rollout-outcome="Failure" aria-label="Failed BreadBaker rollout"></video>
-        </div>
-      </section>
-    </div>
-  </div>
-</section>
 <section class="closing"><div class="wrap closing-inner"><div><span class="micro-label">REFOCUS · RESEARCH PROJECT</span><h2>Progress tells us<br><em>where to practice.</em></h2></div><div class="closing-mark">✳</div></div></section>
 </main><footer><div class="wrap footer-inner"><span class="brand"><span class="brand-mark">✳</span> Re<span>Focus</span></span><span>Progress-guided adaptive practice for long-horizon robotic manipulation</span><a href="#top">BACK TO TOP ↑</a></div></footer>
 </body>
