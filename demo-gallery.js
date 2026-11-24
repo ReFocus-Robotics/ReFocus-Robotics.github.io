@@ -84,9 +84,7 @@ function makeCaseGroup(name, cards, note) {
 document.querySelector('[data-simulation-cases]').append(...simulationBenchmarks.map(benchmark => {
   const cards = benchmark.tasks.map(([title, asset, successes, poster, trials = benchmark.trials]) => {
     const successRate = Math.round(100 * successes / trials)
-    const card = makeVideoCase(title, asset, { context: benchmark.name, poster, outcome: 'Success', successRate, showOutcomeMark: false })
-    card.querySelector('[data-case-outcome]').title = successes + ' successes in ' + trials + ' trials'
-    return card
+    return makeVideoCase(title, asset, { context: benchmark.name, poster, outcome: 'Success', successRate, showOutcomeMark: false })
   })
   return makeCaseGroup(benchmark.name, cards, benchmark.note)
 }))
