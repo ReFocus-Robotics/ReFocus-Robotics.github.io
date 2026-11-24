@@ -195,3 +195,46 @@ addEventListener('scroll', () => {
   const extent = document.documentElement.scrollHeight - innerHeight
   progress.style.transform = `scaleX(${extent > 0 ? scrollY / extent : 0})`
 }, { passive: true })
+
+const pointerEffects = document.querySelector('.pointer-effects')
+const pointerGlow = pointerEffects.querySelector('.pointer-glow')
+const pointerMotion = window.matchMedia('(any-hover: hover) and (any-pointer: fine) and (prefers-reduced-motion: no-preference)')
+let pointerFrame = 0
+let pointerX
+let pointerY
+
+addEventListener('pointermove', event => {
+  if (!pointerMotion.matches || event.pointerType !== 'mouse') return
+  pointerX = event.clientX
+  pointerY = event.clientY
+  if (pointerFrame) return
+  pointerFrame = requestAnimationFrame(() => {
+    pointerFrame = 0
+    pointerGlow.style.setProperty('--pointer-x', pointerX + 'px')
+    pointerGlow.style.setProperty('--pointer-y', pointerY + 'px')
+    pointerEffects.classList.add('is-visible')
+  })
+}, { passive: true })
+
+function hidePointerGlow() {
+  cancelAnimationFrame(pointerFrame)
+  pointerFrame = 0
+  pointerEffects.classList.remove('is-visible')
+}
+
+document.documentElement.addEventListener('pointerleave', hidePointerGlow)
+addEventListener('blur', hidePointerGlow)
+pointerMotion.addEventListener('change', () => {
+  hidePointerGlow()
+  pointerEffects.querySelectorAll('.pointer-ripple').forEach(ripple => ripple.remove())
+})
+
+addEventListener('pointerdown', event => {
+  if (!pointerMotion.matches || event.pointerType !== 'mouse' || event.button !== 0) return
+  const ripple = document.createElement('span')
+  ripple.className = 'pointer-ripple'
+  ripple.style.setProperty('--pointer-x', event.clientX + 'px')
+  ripple.style.setProperty('--pointer-y', event.clientY + 'px')
+  ripple.addEventListener('animationend', () => ripple.remove(), { once: true })
+  pointerEffects.append(ripple)
+}, { passive: true })
