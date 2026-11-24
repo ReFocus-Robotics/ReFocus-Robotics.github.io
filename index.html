@@ -9,7 +9,7 @@
 <title>ReFocus: Progress-Guided Adaptive Practice for Long-Horizon Robotic Manipulation Reinforcement Learning</title>
 <link rel="stylesheet" href="assets/fonts/fonts.css">
 <link rel="stylesheet" href="style.css?v=2">
-<link rel="stylesheet" href="hero-preview.css?v=9">
+<link rel="stylesheet" href="hero-preview.css?v=10">
 <link rel="stylesheet" href="interactive-sections.css?v=5">
 <link rel="stylesheet" href="research-stories.css?v=7">
 <link rel="stylesheet" href="demo-gallery.css">
@@ -86,17 +86,40 @@
       </span>
     </div>
   </div>
-  <div class="hero-actions"><a class="btn primary" href="#method"><span>↓</span> Explore the method</a><a class="btn" href="https://github.com/ReFocus-Robotics/ReFocus">Training code</a></div>
+  <nav class="hero-actions project-resources" aria-label="Project resources">
+    <button class="resource-link" type="button" disabled aria-label="arXiv (pending)">
+      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M6 3h8l4 4v14H6zM14 3v5h4M9 12h6m-6 4h4"/>
+      </svg>
+      arXiv
+    </button>
+    <a class="resource-link" href="https://github.com/ReFocus-Robotics/ReFocus">
+      <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 1a11 11 0 0 0-3.48 21.44c.55.1.75-.24.75-.53v-2.05c-3.06.67-3.71-1.3-3.71-1.3-.5-1.29-1.22-1.63-1.22-1.63-1-.68.08-.67.08-.67 1.1.08 1.68 1.13 1.68 1.13.98 1.68 2.57 1.2 3.2.92.1-.71.39-1.2.7-1.48-2.44-.28-5.01-1.22-5.01-5.44 0-1.2.43-2.2 1.13-2.97-.11-.28-.49-1.4.11-2.92 0 0 .92-.3 3.03 1.13a10.5 10.5 0 0 1 5.52 0c2.1-1.43 3.02-1.13 3.02-1.13.6 1.52.22 2.64.11 2.92.7.77 1.13 1.76 1.13 2.97 0 4.23-2.58 5.15-5.04 5.43.4.34.75 1.02.75 2.06v3.03c0 .3.2.64.76.53A11 11 0 0 0 12 1Z"/>
+      </svg>
+      Code
+    </a>
+    <a class="resource-link" href="https://huggingface.co/datasets/lhy-zju/ReFocus">
+      <span class="resource-icon" aria-hidden="true">🤗</span>
+      Models
+    </a>
+    <button class="resource-link" type="button" disabled aria-label="BibTeX (pending)">
+      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M8 4H4v16h4m8-16h4v16h-4M9 12h6"/>
+      </svg>
+      BibTeX
+    </button>
+  </nav>
     </div>
     <button type="button" class="motion-toggle" data-motion-toggle hidden>Pause background</button>
   </div>
   <figure class="project-video wrap" id="project-video">
     <video controls playsinline preload="none" width="1920" height="1080"
-           poster="assets/project-video/poster.jpg" data-manual-playback
+           poster="assets/project-video/poster.jpg?v=2" data-manual-playback
            aria-label="ReFocus project video with narration">
-      <source src="assets/project-video/refocus-demo.mp4" type="video/mp4">
+      <source src="assets/project-video/refocus-demo.mp4?v=2" type="video/mp4">
       <track kind="captions" src="assets/project-video/captions.en.vtt" srclang="en" label="English">
-      <a href="assets/project-video/refocus-demo.mp4">Open the ReFocus video</a>
+      <a href="assets/project-video/refocus-demo.mp4?v=2">Open the ReFocus video</a>
     </video>
   </figure>
   <dl class="hero-highlights wrap" aria-label="Key results">
