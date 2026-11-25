@@ -211,3 +211,17 @@ addEventListener('pointerdown', event => {
   ripple.addEventListener('animationend', () => ripple.remove(), { once: true })
   pointerEffects.append(ripple)
 }, { passive: true })
+
+const copyBibtex = document.querySelector('.citation-copy')
+const bibtex = document.querySelector('#bibtex code')
+const copyStatus = document.querySelector('.citation-copy-status')
+copyBibtex.addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText(bibtex.textContent)
+    copyStatus.textContent = 'Copied'
+  } catch {
+    window.getSelection().selectAllChildren(bibtex)
+    copyStatus.textContent = 'Text selected. Use your copy shortcut.'
+  }
+})
+copyBibtex.hidden = false

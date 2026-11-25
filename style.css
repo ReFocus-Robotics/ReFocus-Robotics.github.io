@@ -56,3 +56,32 @@ html:not(.dark) .pointer-effects { --pointer-tint: 65 156 112; }
 .citation-section code {
   font: 400 clamp(12px, 1.2vw, 15px)/1.65 var(--mono);
 }
+
+.citation-heading,
+.citation-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.citation-heading { justify-content: space-between; }
+.citation-controls { justify-content: flex-end; }
+
+.citation-copy {
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--soft);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.citation-copy:hover { border-color: var(--teal); }
+
+.citation-copy-status {
+  color: var(--muted);
+  font-size: 13px;
+}
