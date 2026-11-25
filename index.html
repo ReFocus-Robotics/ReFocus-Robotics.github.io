@@ -122,9 +122,9 @@
     <video controls playsinline preload="none" width="1920" height="1080"
            poster="assets/project-video/poster.jpg?v=2" data-manual-playback
            aria-label="ReFocus project video with narration">
-      <source src="assets/project-video/refocus-demo.mp4?v=2" type="video/mp4">
+      <source src="assets/project-video/refocus-demo.mp4?v=3" type="video/mp4">
       <track kind="captions" src="assets/project-video/captions.en.vtt" srclang="en" label="English">
-      <a href="assets/project-video/refocus-demo.mp4?v=2">Open the ReFocus video</a>
+      <a href="assets/project-video/refocus-demo.mp4?v=3">Open the ReFocus video</a>
     </video>
   </figure>
   <dl class="hero-highlights wrap" aria-label="Key results">
@@ -277,9 +277,9 @@
   </div>
 </section>
 <section class="section wrap" id="practice">
-  <div class="section-heading">
+  <div class="section-heading practice-section-heading">
     <div class="section-kicker"><span>02</span> ADAPTIVE PRACTICE WINDOWS</div>
-    <h2>Find the bottleneck.<br><em>Make room to practice.</em></h2>
+    <h2>Find the bottleneck. <em>Make room to practice.</em></h2>
     <p>The Scheduler selects a task segment using evaluation rollouts and prior practice. Switch between the full rollout, Prefix, and Suffix, then drag through the selected clip.</p>
   </div>
   <div class="story-panel practice-story">
@@ -335,7 +335,7 @@
     </figure>
   </template>
 </section>
-<section class="section results-section" id="results"><div class="wrap"><div class="section-heading"><div class="section-kicker"><span>PART II</span> EXPERIMENTS</div><h2>From local practice to<br><em>full-task progress.</em></h2><p>ReFocus improves the SFT-initialized π<sub>0.5</sub> policy across two long-horizon simulation benchmarks. Scores below are reported full-task success rates.</p></div>
+<section class="section results-section" id="results"><div class="wrap"><div class="section-heading"><div class="section-kicker"><span>PART II</span> EXPERIMENTS</div><h2>From local practice to<br><em>full-task progress.</em></h2></div>
 <div class="rounds-panel" id="rounds-chart"><div class="rounds-title"><div><span class="micro-label">SUCCESS ACROSS OPTIMIZATION ROUNDS</span><h3>Practice, round by round.</h3></div><span class="rounds-detail">FULL-TASK SUCCESS RATE</span></div><p class="chart-lede">Each point is a full-task evaluation.</p><div class="plot-grid"><div class="plot-card"><div class="plot-heading"><div><span class="micro-label">BENCHMARK 01</span><h4>LIBERO-Long</h4></div><strong id="value-libero">90.6%</strong></div><svg class="line-chart" viewBox="0 0 480 220" role="img" aria-label="LIBERO-Long success rates by round. SFT 90.6%, Round 1 92.4%, Round 2 94.6%, Round 3 97.8%."><g class="gridlines"><path d="M50 30H450 M50 97H450 M50 164H450"/></g><g class="axis-labels"><text x="38" y="34" text-anchor="end">100</text><text x="38" y="101" text-anchor="end">95</text><text x="38" y="168" text-anchor="end">90</text><text x="70" y="200" text-anchor="middle">SFT</text><text x="193" y="200" text-anchor="middle">R1</text><text x="317" y="200" text-anchor="middle">R2</text><text x="440" y="200" text-anchor="middle">R3</text></g><path class="line-area area-libero" d="M70 155.96 L193 131.84 L317 102.36 L440 59.48 L440 164 L70 164 Z"/><path class="line-path stroke-libero" pathLength="1" d="M70 155.96 L193 131.84 L317 102.36 L440 59.48"/><g class="plot-points libero-points"><circle cx="70" cy="155.96" r="5"/><circle cx="193" cy="131.84" r="5"/><circle cx="317" cy="102.36" r="5"/><circle cx="440" cy="59.48" r="5"/></g><circle class="current-point libero-current" cx="70" cy="155.96" r="8"/></svg><div class="plot-axis">SUCCESS RATE (%) <span>90–100%</span></div></div><div class="plot-card"><div class="plot-heading"><div><span class="micro-label">BENCHMARK 02</span><h4>RoboCasa365</h4></div><strong id="value-robocasa">39.3%</strong></div><svg class="line-chart" viewBox="0 0 480 220" role="img" aria-label="RoboCasa365 success rates by round. SFT 39.3%, Round 1 42.5%, Round 2 47.6%, Round 3 51.3%."><g class="gridlines"><path d="M50 30H450 M50 97H450 M50 164H450"/></g><g class="axis-labels"><text x="38" y="34" text-anchor="end">55</text><text x="38" y="101" text-anchor="end">45</text><text x="38" y="168" text-anchor="end">35</text><text x="70" y="200" text-anchor="middle">SFT</text><text x="193" y="200" text-anchor="middle">R1</text><text x="317" y="200" text-anchor="middle">R2</text><text x="440" y="200" text-anchor="middle">R3</text></g><path class="line-area area-robocasa" d="M70 135.19 L193 113.75 L317 79.58 L440 54.79 L440 164 L70 164 Z"/><path class="line-path stroke-robocasa" pathLength="1" d="M70 135.19 L193 113.75 L317 79.58 L440 54.79"/><g class="plot-points robocasa-points"><circle cx="70" cy="135.19" r="5"/><circle cx="193" cy="113.75" r="5"/><circle cx="317" cy="79.58" r="5"/><circle cx="440" cy="54.79" r="5"/></g><circle class="current-point robocasa-current" cx="70" cy="135.19" r="8"/></svg><div class="plot-axis">SUCCESS RATE (%) <span>35–55%</span></div></div></div><p class="chart-caption">The charts use different vertical ranges to show changes within each benchmark. R1–R3 denote successive rounds of Global and Local RL.</p></div>
 <section class="results-explorer round-video-explorer" id="round-rollouts">
   <div class="demo-section-header"><h3>RoboCasa365 rollouts by round</h3><span class="video-speed-label">3× PLAYBACK</span></div>
@@ -343,14 +343,14 @@
   <div data-round-video-cases></div>
 </section>
 <div class="results-explorer" id="comparison">
-  <div class="explorer-top"><div><span class="micro-label">PAPER TABLE 1</span><h3>Simulation benchmarks</h3></div>
+  <div class="explorer-top"><div><h3>Simulation benchmarks</h3></div>
     <div class="chip-group" data-result-options role="group" aria-label="Simulation horizon"></div>
   </div>
   <div class="chart-gallery simulation-gallery" data-result-charts></div>
   <p class="chart-detail" data-result-detail aria-live="polite">Select any bar to inspect its result.</p>
 </div>
 <div class="results-explorer" id="real-results">
-  <div class="explorer-top"><div><span class="micro-label">PAPER TABLE 5</span><h3>Real-robot tasks</h3></div></div>
+  <div class="explorer-top"><div><h3>Real-robot tasks</h3></div></div>
   <div class="chart-gallery" data-physical-charts></div>
   <p class="chart-detail" data-physical-detail aria-live="polite">Select any bar to inspect its result.</p>
 </div>

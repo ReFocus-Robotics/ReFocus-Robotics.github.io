@@ -1,7 +1,6 @@
 const simulationBenchmarks = [
   // Load Dishwasher, Pre-Soak Pan, and Boil the Kettle use 25 archived development trials per task (updates 105–125).
   { name: 'RoboCasa365', trials: 25,
-    note: 'Success rates are shown per 100. Evaluations used 25 or 50 trials per task, with 25-trial results from development checkpoints.',
     tasks: [
     ['Load Dishwasher', 'load-dishwasher', 16, 'rollouts/dishwasher-a.jpg'],
     ['Pre-Soak Pan', 'pre-soak-pan', 13, 'rollouts/soak-a.jpg'],
@@ -12,7 +11,6 @@ const simulationBenchmarks = [
   ] },
   // Update-150 counts from the revised LIBERO-Long per-task results.
   { name: 'LIBERO-Long', trials: 50,
-    note: 'Success rates are shown per 100. Evaluations used 50 trials per task.',
     tasks: [
     ['Soup & Sauce in Basket', 'simulation/libero-soup-sauce', 50],
     ['Heat Moka Pot', 'simulation/libero-heat-moka-pot', 48],
@@ -43,7 +41,7 @@ function addRolloutMark(video, container, outcome, label, finishAt) {
 
 const videoCaseTemplate = document.querySelector('#video-case-template')
 function makeVideoCase(title, asset, options = {}) {
-  const { context = '', poster = 'demos/' + asset + '.jpg', outcome, steps, successRate, showOutcomeMark = true } = options
+  const { context = '', poster = 'demos/' + asset + '.jpg', outcome, steps, successRate, successDenominator = 100, showOutcomeMark = true } = options
   const card = videoCaseTemplate.content.firstElementChild.cloneNode(true)
   const video = card.querySelector('video')
   const caption = card.querySelector('[data-case-outcome]')
@@ -55,7 +53,7 @@ function makeVideoCase(title, asset, options = {}) {
   if (outcome) {
     if (showOutcomeMark) video.dataset.rolloutOutcome = outcome
     caption.hidden = false
-    caption.textContent = successRate === undefined ? outcome : 'Success rate ' + successRate + '/100'
+    caption.textContent = successRate === undefined ? outcome : 'Success rate ' + successRate + '/' + successDenominator
     if (steps !== undefined) caption.textContent += ' · ' + steps.toLocaleString('en-US') + ' steps'
     caption.dataset.outcome = outcome.toLowerCase()
   }
@@ -84,7 +82,8 @@ function makeCaseGroup(name, cards, note) {
 document.querySelector('[data-simulation-cases]').append(...simulationBenchmarks.map(benchmark => {
   const cards = benchmark.tasks.map(([title, asset, successes, poster, trials = benchmark.trials]) => {
     const successRate = Math.round(100 * successes / trials)
-    return makeVideoCase(title, asset, { context: benchmark.name, poster, outcome: 'Success', successRate, showOutcomeMark: false })
+    const successDenominator = benchmark.name === 'LIBERO-Long' ? trials : 100
+    return makeVideoCase(title, asset, { context: benchmark.name, poster, outcome: 'Success', successRate, successDenominator, showOutcomeMark: false })
   })
   return makeCaseGroup(benchmark.name, cards, benchmark.note)
 }))

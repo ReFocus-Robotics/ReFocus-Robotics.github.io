@@ -85,3 +85,10 @@ html:not(.dark) .pointer-effects { --pointer-tint: 65 156 112; }
   color: var(--muted);
   font-size: 13px;
 }
+
+/* Keep the practice headline compact on wide screens. */
+.practice-section-heading { max-width: none; }
+.practice-section-heading h2 { font-size: clamp(34px, 4vw, 56px); white-space: nowrap; }
+@media (max-width: 760px) {
+  .practice-section-heading h2 { white-space: normal; }
+}
