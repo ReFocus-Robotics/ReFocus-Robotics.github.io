@@ -201,3 +201,62 @@ a.resource-link:hover {
   }
   .resource-link { min-width: 0; }
 }
+
+/* Animated task wall: paired rows drift in opposite directions behind the hero. */
+.rollout-wall {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(3px, .45vw, 7px);
+  padding: 2vh 0;
+}
+.rollout-row {
+  display: flex;
+  flex: 1 1 0;
+  min-height: 0;
+  width: max-content;
+  --rollout-gap: clamp(3px, .45vw, 7px);
+  gap: var(--rollout-gap);
+  animation: rollout-row-left 46s linear infinite;
+  will-change: transform;
+}
+.rollout-row:nth-child(even) { animation-name: rollout-row-right; animation-duration: 54s; }
+.rollout-row-group {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: stretch;
+  gap: var(--rollout-gap);
+}
+.rollout-wall picture {
+  display: block;
+  flex: 0 0 clamp(170px, 16vw, 270px);
+  min-height: 0;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #182622;
+}
+.rollout-wall img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(.65);
+}
+@keyframes rollout-row-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-50% - var(--rollout-gap, 3px) / 2)); }
+}
+@keyframes rollout-row-right {
+  from { transform: translateX(calc(-50% - var(--rollout-gap, 3px) / 2)); }
+  to { transform: translateX(0); }
+}
+@media (max-width: 760px) {
+  .rollout-wall { gap: 2px; padding: 1vh 0; }
+  .rollout-row { --rollout-gap: 2px; }
+  .rollout-row-group { gap: var(--rollout-gap); }
+  .rollout-wall picture { flex-basis: clamp(135px, 31vw, 205px); }
+  .rollout-row { animation-duration: 40s; }
+  .rollout-row:nth-child(even) { animation-duration: 47s; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rollout-row { animation: none; transform: none; }
+}
