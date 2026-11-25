@@ -36,3 +36,23 @@ html.dark .btn.primary, html.dark .track-node.selected span { color: #0c211b; }
 }
 
 html:not(.dark) .pointer-effects { --pointer-tint: 65 156 112; }
+
+.citation-section {
+  padding: clamp(44px, 7vw, 84px) 0;
+  scroll-margin-top: 85px;
+}
+
+.citation-section pre {
+  margin: 20px 0 0;
+  padding: clamp(16px, 2.5vw, 28px);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--paper);
+  color: var(--ink);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.citation-section code {
+  font: 400 clamp(12px, 1.2vw, 15px)/1.65 var(--mono);
+}
